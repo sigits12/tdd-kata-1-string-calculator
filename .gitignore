@@ -17,6 +17,8 @@
 *.tar.gz
 *.rar
 
+target/
+
 ### Eclipse ###
 .classpath
 .project
