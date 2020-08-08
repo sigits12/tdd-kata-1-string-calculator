@@ -13,7 +13,7 @@ public class CalculatorTest {
 	}
 	
 	@Test
-	public void shouldRetrunNumberOnNumber() {
+	public void shouldReturnNumberOnNumber() {
 		assertEquals(1, Calculator.add("1"));
 	}
 	
@@ -33,7 +33,7 @@ public class CalculatorTest {
 	}
 	
 	@Test
-	public void shouldAcceptCustomDelimiterSntax() {
+	public void shouldAcceptCustomDelimiterSyntax() {
 		assertEquals(3, Calculator.add("//;\n1;2"));
 	}
 	
@@ -46,9 +46,8 @@ public class CalculatorTest {
 	public void shouldRaiseExceptionOnNegatives() {
 		try {
 			Calculator.add("-1,2,3");
-			fail("Exception expeted.");
-		} catch (RuntimeException ex) {
-			
+		} catch (IllegalArgumentException ex) {
+			assertEquals("Negatives not allowed: [-1]", ex.getMessage());
 		}
 	}
 	
@@ -56,8 +55,7 @@ public class CalculatorTest {
 	public void exceptionMessageShouldContainTheNegativeNumber() {
 		try {
 			Calculator.add("-1,2,3");
-			fail("Exception expeted.");
-		} catch (RuntimeException ex) {
+		} catch (IllegalArgumentException ex) {
 			assertEquals("Negatives not allowed: [-1]", ex.getMessage());
 		}
 	}

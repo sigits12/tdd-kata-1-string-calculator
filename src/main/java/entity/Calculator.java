@@ -1,5 +1,8 @@
 package entity;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -7,12 +10,19 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Calculator {
+
+    final static Logger logger = LoggerFactory.getLogger(Calculator.class);
 	
 	public static int add(String text) {
-		return toListOfIntegers(toListOfStrings(text))
+
+		int sum = toListOfIntegers(toListOfStrings(text))
 				.stream()
 	    		.mapToInt(Integer::intValue)
 	    		.sum();
+
+        logger.info("Sum result : " + String.valueOf(sum));
+
+        return sum;
 	}
 	
 	private static boolean usesCustomDelimiterSyntax(String text) {
@@ -46,12 +56,13 @@ public class Calculator {
 		return numbers;
 	}
 
-	private static void ensureAllNonNegative(List<Integer> numbers) throws RuntimeException {
+	private static void ensureAllNonNegative(List<Integer> numbers) throws IllegalArgumentException {
 		List<Integer> negatives = numbers.stream().filter(s -> s < 0).collect(Collectors.toList());
 		
 		if (negatives.size() > 0) {
-			throw new RuntimeException("Negatives not allowed: " + negatives.toString());
-		}
+            logger.error("Negatives not allowed: " + negatives.toString());
+            throw new IllegalArgumentException("Negatives not allowed: " + negatives.toString());
+        }
 	}
 	
 }
